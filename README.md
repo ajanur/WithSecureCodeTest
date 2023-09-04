@@ -8,7 +8,14 @@
   5. Show error message if no product found
 
 # Setup
-Proxy setup of public API(https://dummyjson.com/products")
+Proxy setup of public API(https://dummyjson.com/products") in profy.config.json
+
+"/products/*": {
+        "target": "https://dummyjson.com",
+        "secure": true,
+        "changeOrigin": true,
+        "logLevel": "debug"
+    }
 
 # Angular run commands
   1. $ npm install
