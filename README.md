@@ -1,4 +1,5 @@
 # WithSecureCodeTest
+Its a sample Product Listing application with Angular Web. Backend API is provided as public API https://dummyjson.com/products
 
 # Features
   1. Listing all products in tabular format
