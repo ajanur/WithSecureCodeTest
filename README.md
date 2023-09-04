@@ -8,7 +8,7 @@
   5. Show error message if no product found
 
 # Setup
-Proxy setup of public API(https://dummyjson.com/products") in profy.config.json
+Proxy setup of public API(https://dummyjson.com/products") in proxy.config.json
 
 "/products/*": {
         "target": "https://dummyjson.com",
