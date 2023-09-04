@@ -12,8 +12,10 @@ Proxy setup of public API(https://dummyjson.com/products")
 
 # Angular run commands
 $ ng serve
+http://localhost:4200/product-list
 
 # Angular Test commands
 $ ng test
+http://localhost:9876/?id=31201769
 
 
