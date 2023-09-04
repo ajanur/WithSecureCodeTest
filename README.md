@@ -6,7 +6,7 @@
   3. Pagination with 5, 10, 15 items in one page
   4. Search all products with text in descriptions
 
-# setup
+# Setup
 proxy setup of public API(https://dummyjson.com/products")
 
 # Angular run commands
