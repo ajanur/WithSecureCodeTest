@@ -2,7 +2,7 @@
 
 # Features
   1. Listing all Products
-  2. sorting all columns with accending and decending order for each columns in Table
+  2. Sorting all columns value with accending and decending order for each columns in Table
   3. Pagination with 5, 10, 15 items in one page
   4. Search all products with text in descriptions
 
