@@ -1,7 +1,7 @@
 # WithSecureCodeTest
 
 # Features
-  1. Listing all Products in tabular format
+  1. Listing all products in tabular format
   2. Sorting all columns value with accending and decending order for each columns in Table
   3. Pagination with 5, 10, 15 items in one page
   4. Search all products with text in descriptions
