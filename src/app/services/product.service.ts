@@ -34,9 +34,9 @@ export class ProductService {
         "title": product.title,
         "description": product,
         "price": product,
-        "discountPercentage":product,
-        "rating": product,
-        "stock": product,
+        // "discountPercentage":product,
+        // "rating": product,
+        // "stock": product,
         "brand": product,
         "category": product.category,
       };
@@ -45,13 +45,14 @@ export class ProductService {
       .pipe(catchError(this.handleError));
   }
 
-  UpdateProduct(todo: Todo):Observable<any>{
+  UpdateProduct(product: Product):Observable<any>{
     const headers = {'content-type': 'application/json' };
     const body = { 
-      "Id": todo.id.toString(),
-      "Name" : todo.name,
-      "Priority":todo.priority,
-      "Status" : todo.status
+      "id": product.id.toString(),
+      "title" : product.title,
+      "price":product.price,
+      "brand" : product.brand,
+      "category" : product.category
      };
     //console.log(" Update Service...");
     return this.http.put<Todo>(this.BaseUrl + '/update',JSON.stringify(body), {headers : headers})
