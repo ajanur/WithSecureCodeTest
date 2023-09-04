@@ -23,8 +23,9 @@ describe('ProductService', () => {
 
   it('should return expected products (HttpClient called once)', (done: DoneFn) => {
     const expectedProducts: Product[] =
-      [{ id: 1, title: 'A',description:'A', price:20.0, category:'Smart Phone' }, 
-      { id: 2, title: 'A',description:'A', price:20.0, category:'Smart Phone' }, 
+    [
+      { id: 1, title: 'A',description:'A', price:20.0, brand: "Apple",category:'Smart Phone' }, 
+      { id: 2, title: 'A',description:'A', price:20.0, brand: "Apple", category:'Smart Phone' }, 
     ];
   
     httpClientSpy.get.and.returnValue(of(expectedProducts));
