@@ -7,6 +7,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Product, ProductElements } from 'src/app/models/product.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -16,22 +17,35 @@ export class ProductListComponent implements AfterViewInit {
 
   productList:ProductElements[] = [];
   productSearchtList:ProductElements[] = [];
-  displayedColumns: string[] = ['id', 'title', 'description', 'price', 'brand', 'category'];
+  displayedColumns: string[] = ['id', 'title', 'description', 'price', 'brand', 'category','actions'];
   dataSource = new MatTableDataSource<ProductElements>();
+  brandList = ['Apple','samsung','Nokia','Others']
+  categoryList = ['Smart Phones','TV','Tablet','Others']
 
+  isUpdate:boolean = false;
+  submitted:boolean = false;
   errorMsg:any = null;
   successMsg:any = null;
 
   searchControl = new FormControl('');
 
-  // productForm: FormGroup = new FormGroup({
-  //   search: new FormControl('',[Validators.required,Validators.minLength(4)]),
-  // });
+  productForm: FormGroup = new FormGroup({
+    title: new FormControl('',[Validators.required,Validators.minLength(4)]),
+    description: new FormControl('',[Validators.required,Validators.minLength(4)]),
+    price: new FormControl('',[Validators.required,Validators.minLength(4)]),
+    brand: new FormControl('',[Validators.required,Validators.minLength(4)]),
+    category: new FormControl('',[Validators.required,Validators.minLength(4)])
+  });
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private productService:ProductService,private _liveAnnouncer: LiveAnnouncer){}
+
+  //Propeties
+  get productFormControl() {
+    return this.productForm.controls;
+  }
 
   ngOnInit(){
     this.GetProductList();
@@ -76,6 +90,31 @@ export class ProductListComponent implements AfterViewInit {
       complete: () => console.info('complete') 
     });
   }
+
+  Add(){
+    console.log("Add clicked");
+  }
+  Edit(id:number){
+    console.log("Edit clicked" + JSON.stringify(id));
+  }
+  Delete(id:number){
+    console.log("Edit clicked" + id);
+  }
+  onCancel(){
+  }
+
+  onSubmit(){
+    this.resetvalues();
+    this.submitted = true;
+    if (this.productForm.invalid) {
+      return;
+    }
+  }
+
+  resetvalues(){
+    this.errorMsg = null;
+  }
+  
 
   GetSearchedProduct(){
     let value:any

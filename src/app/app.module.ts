@@ -15,6 +15,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { TestComponent } from './src/test/test.component';
 import { ProductListComponent } from './src/product-list/product-list.component';
+import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -35,6 +37,8 @@ import { ProductListComponent } from './src/product-list/product-list.component'
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [
     { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
