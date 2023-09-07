@@ -31,6 +31,7 @@ export class ProductListComponent implements AfterViewInit {
   searchControl = new FormControl('');
 
   productForm: FormGroup = new FormGroup({
+    id: new FormControl(''),
     title: new FormControl('',[Validators.required,Validators.minLength(4)]),
     description: new FormControl(''),
     price: new FormControl('',[Validators.required,Validators.pattern("^[0-9]*$")]),
@@ -58,7 +59,7 @@ export class ProductListComponent implements AfterViewInit {
     return unique;
   }
 
-
+  // Lifecycle hooks
   ngOnInit(){
     this.GetProductList();
     this.errorMsg = null;
@@ -71,8 +72,43 @@ export class ProductListComponent implements AfterViewInit {
     this.dataSource.sort.disableClear = true;
   }
 
+  //public functions
 
-  GetSearchedProduct(){
+  GetProductList(){
+    this.productService.GetProductList()
+    .subscribe({
+      next: (data) => 
+      {
+        console.log(data);
+        this.productList = data.products;
+        this.dataSource.data = this.productList;
+      },
+      error: (error) => 
+      {
+        console.log(error);
+        throw error;
+        //this.error = error;
+      },
+      complete: () => console.info('complete') 
+    });
+  }
+  /** Announce the change in sort state for assistive technology. */ 
+  announceSortChange(sortState: Sort) {
+    // This example uses English messages. If your application supports
+    // multiple language, you would internationalize these strings.
+    // Furthermore, you can customize the message to add additional
+    // details about the values being sorted.
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
+
+  //Actions
+
+  onSearch(){
+    this.resetvalues();
     let value:any
     value = this.searchControl.value;
     this.productService.GetSearchProduct(value)
@@ -94,56 +130,31 @@ export class ProductListComponent implements AfterViewInit {
       {
         console.log(error);
         this.errorMsg = "Something went wrong"
-        throw error;
+        //throw error;
         //this.error = error;
       },
       complete: () => console.info('complete') 
     });
   }
 
-  GetProductList(){
-    this.productService.GetProductList()
-    .subscribe({
-      next: (data) => 
-      {
-        console.log(data);
-        this.productList = data.products;
-        this.dataSource.data = this.productList;
-      },
-      error: (error) => 
-      {
-        console.log(error);
-        throw error;
-        //this.error = error;
-      },
-      complete: () => console.info('complete') 
-    });
-  }
-
-  //Actions
-  /** Announce the change in sort state for assistive technology. */
-  announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-
-  Add(){
-    console.log("Add clicked");
-  }
-  Edit(id:number){
+  onEdit(id:number){
     console.log("Edit clicked" + JSON.stringify(id));
-  }
-  Delete(id:number){
-    console.log("Edit clicked" + id);
-  }
-  onCancel(){
+    this.resetvalues();
+    this.isUpdate = true;
+    console.log("update enabled");
+    let product = this.productList.filter(x=>x.id === id)[0];
+    console.log(product);
+
+    //
+    this.productForm.patchValue({
+      id: product.id,
+      title : product.title,
+      description: product.description,
+      price: product.price,
+      brand: product.brand,
+      category: product.category
+    });
+
   }
 
   onSubmit(){
@@ -152,10 +163,11 @@ export class ProductListComponent implements AfterViewInit {
     if (this.productForm.invalid) {
       return;
     }
+    
     //Server side validation and call Add Todo
     if(this.isUpdate){
       console.log("Update : " + this.isUpdate);
-      this.onSave();
+      this.onSave(this.productForm.value.id);
     }
     else{
       let product = {
@@ -182,12 +194,77 @@ export class ProductListComponent implements AfterViewInit {
     });
   }
   }
+  
   resetvalues(){
     this.errorMsg = null;
+    this.errorSearch = null;
+    this.successMsg = null;
+    this.submitted = false;
   }
 
-  onSave(){
+  onSave(id:number){
+    this.resetvalues();
+    console.log("Saving new values");
+    let value = this.productForm.value;
+    console.log("Id:" + id)
 
+    let product = {
+      title :value.title,
+      description :  value.description,
+      price : value.price,
+      brand :  value.brand,
+      category : value.category
+    }
+
+    this.productService.UpdateProduct(id,product)
+    .subscribe({
+      next: (res) => 
+      {
+        console.log(res);
+        this.GetProductList();
+        this.successMsg = `Task  ${product.title} has been updated successfully`;
+        this.isUpdate = false;
+      },
+      error: (err) => 
+      {
+        console.log(err);
+        this.errorMsg = err.error?err.error.message:err;
+      },
+      complete: () => console.info('complete') 
+    });
+  }
+
+  onCancel(){
+    this.resetvalues();
+    this.isUpdate = false;
+    this.productForm.markAsUntouched();
+    this.productForm.reset();
+
+  }
+
+  onDelete(id: number){
+    console.log("Deleting new values");
+    this.resetvalues();
+
+    let product = this.productList.filter(x=>x.id === id)[0];
+    if(product != null || product!=undefined){
+      this.productService.DeleteProduct(id)
+      .subscribe({
+        next: (res) => 
+        {
+          console.log(res);
+          this.successMsg = `Product  ${product.title} has been deleted successfully`;
+          this.GetProductList();
+        },
+        error: (err) => 
+        {
+          console.log(err.error);
+          this.errorMsg = err.error?err.error.message:err;
+        },
+        complete: () => console.info('delete complete') 
+      });
+    }
+    this.isUpdate = false;
   }
   
 

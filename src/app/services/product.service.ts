@@ -31,35 +31,20 @@ export class ProductService {
   AddProduct(product:any):Observable<ProductElements>{
     const headers = {'content-type': 'application/json' };
     const body = product;
-    // const body = { 
-    //     "title": product.title,
-    //     "description": product,
-    //     "price": product,
-    //     "brand": product,
-    //     "category": product.category,
-    //   };
       console.log(JSON.stringify(body));
       return this.http.post<ProductElements>(this.BaseUrl + '/add',JSON.stringify(body),{headers : headers})
       .pipe(catchError(this.handleError));
   }
 
-  UpdateProduct(product: Product):Observable<any>{
+  UpdateProduct(id: number, product: any):Observable<any>{
     const headers = {'content-type': 'application/json' };
-    const body = { 
-      "id": product.id.toString(),
-      "title" : product.title,
-      "price":product.price,
-      "brand" : product.brand,
-      "category" : product.category
-     };
-    //console.log(" Update Service...");
-    return this.http.put<Todo>(this.BaseUrl + '/update',JSON.stringify(body), {headers : headers})
+    const body = product;
+    return this.http.put<ProductElements>(this.BaseUrl + '/' + id,JSON.stringify(body), {headers : headers})
       .pipe(catchError(this.handleError));
   }
 
   DeleteProduct(id: number):Observable<any>{
-    //console.log(" Delete Service...");
-    return this.http.delete<any>(this.BaseUrl + '/delete/' + id)
+    return this.http.delete<any>(this.BaseUrl + '/' + id)
       .pipe(catchError(this.handleError));
   }
 
