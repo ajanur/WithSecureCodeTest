@@ -3,77 +3,7 @@
         <h2>Product Listing</h2>
     </div>
     <br>
-    <div class="container">
-        <div>
-            <form class="product-form" [formGroup]="productForm" (ngSubmit)="onSubmit()">
-                <div class="row">
-                    <div class="input-field col m3">
-                        <input type="text" [readonly]="isUpdate" class="form-control" [ngClass]="{ 'is-invalid': submitted && productFormControl['title'].errors }" id="title" formControlName="title" placeholder="Product title" required>
-                        <!-- <span class="text-danger"
-                                *ngIf="(productFormControl['title'].touched || submitted) && productFormControl['title'].errors?.['required']">
-                                Required
-                        </span>
-                        <span class="text-danger"
-                                *ngIf="(productFormControl['title'].touched || submitted) && productFormControl['title'].errors?.['minlength']">
-                                Minimum length required
-                        </span> -->
-                        <!-- More validation-->
-                    </div>
-                    <div class="input-field col m3">
-                        <!-- <label for="priority">Product Description</label> -->
-                        <input type="text" [readonly]="isUpdate" class="form-control" [ngClass]="{ 'is-invalid': submitted && productFormControl['description'].errors }" id="description" formControlName="description" placeholder="Product description" required>
-                        <!-- <span class="text-danger"
-                                *ngIf="(productFormControl['description'].touched || submitted) && productFormControl['description'].errors?.['required']">
-                                Required
-                        </span>
-                        <span class="text-danger"
-                                *ngIf="(productFormControl['description'].touched || submitted) && productFormControl['description'].errors?.['max']">
-                                Range between 1 to 5
-                        </span> -->
-                    </div>
-                    <div class="input-field col m3">
-                        <!-- <label for="priority">Product Price</label> -->
-                        <input type="text" [readonly]="isUpdate" class="form-control" [ngClass]="{ 'is-invalid': submitted && productFormControl['price'].errors }" id="price" formControlName="price" placeholder="Product price" required>
-                        <!-- <span class="text-danger"
-                                *ngIf="(productFormControl['price'].touched || submitted) && productFormControl['price'].errors?.['required']">
-                                Required
-                        </span>
-                        <span class="text-danger"
-                                *ngIf="(productFormControl['price'].touched || submitted) && productFormControl['price'].errors?.['max']">
-                                Range between 1 to 5
-                        </span> -->
-                    </div>
-                    <div class="input-field col m3">
-                        <!-- <label for="brand">Select Brand</label> -->
-                        <select id="brand" class="form-control"  formControlName="status" [ngClass]="{ 'is-invalid': submitted && productFormControl['brand'].errors }">
-                            <option *ngFor="let brand of brandList" [ngValue]="brand">{{brand}}</option>
-                        </select>
-                        <!-- <span class="text-danger"
-                                *ngIf="(productFormControl['brand'].touched || submitted) && productFormControl['brand'].errors?.['required']">
-                                Required
-                        </span> -->
-                    </div>
-                    <div class="input-field col m3">
-                        <!-- <label for="category">Select Category</label> -->
-                        <select id="category" class="form-control"  formControlName="status" [ngClass]="{ 'is-invalid': submitted && productFormControl['brand'].errors }">
-                            <option *ngFor="let category of categoryList" [ngValue]="category">{{category}}</option>
-                        </select>
-                        <!-- <span class="text-danger"
-                                *ngIf="(productFormControl['category'].touched || submitted) && productFormControl['category'].errors?.['required']">
-                                Required
-                        </span> -->
-                    </div>
-                    <div class="input-field col m3" *ngIf="!isUpdate">
-                        <button type="submit" class="btn btn-success btn-sm" name="add" id="add">+Add</button>
-                    </div>
-                    <div class="input-field col m3" *ngIf="isUpdate">
-                        <button type="submit" class="btn btn-success btn-sm" name="add" id="add">Yes</button>
-                        <button type="button" class="btn btn-warning btn-sm" (click)="onCancel()" name="cancel" id="cancel">No</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    
     <br>
     <div class="container">
             <div class="row height d-flex justify-content-center align-items-center">
@@ -86,13 +16,76 @@
               </div>            
             </div>          
         <br>
+        <div>
+            <form class="product-form" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="input-field col m3">
+                        <input type="text" [readonly]="isUpdate" class="form-control" [ngClass]="{ 'is-invalid': submitted && productFormControl['title'].errors }" id="title" formControlName="title" placeholder="Product title" required>
+                        <span class="text-danger"
+                                *ngIf="(productFormControl['title'].touched || submitted) && productFormControl['title'].errors?.['required']">
+                                Required
+                        </span>
+                        <span class="text-danger"
+                                *ngIf="(productFormControl['title'].touched || submitted) && productFormControl['title'].errors?.['minlength']">
+                                Minimum length required
+                        </span>
+                        <!-- More validation-->
+                    </div>
+                    <div class="input-field col m3">
+                        <!-- <label for="priority">Product Description</label> -->
+                        <input type="text" [readonly]="isUpdate" class="form-control" [ngClass]="{ 'is-invalid': submitted && productFormControl['description'].errors }" id="description" formControlName="description" placeholder="Product description">
+                    </div>
+                    <div class="input-field col m3">
+                        <!-- <label for="priority">Product Price</label> -->
+                        <input type="text" [readonly]="isUpdate" class="form-control" [ngClass]="{ 'is-invalid': submitted && productFormControl['price'].errors }" id="price" formControlName="price" placeholder="Product price">
+                        <span class="text-danger"
+                                *ngIf="(productFormControl['price'].touched || submitted) && productFormControl['price'].errors?.['required']">
+                                Required
+                        </span>
+                        <span class="text-danger"
+                                *ngIf="(productFormControl['price'].touched || submitted) && productFormControl['price'].errors?.['pattern']">
+                                Enter number
+                        </span>
+                    </div>
+                    <div class="input-field col m3">
+                        <!-- <label for="brand">Select Brand</label> -->
+                        <select id="brand" class="form-control"  formControlName="brand" [ngClass]="{ 'is-invalid': submitted && productFormControl['brand'].errors }">
+                            <option *ngFor="let brand of brandList" [ngValue]="brand">{{brand}}</option>
+                        </select>
+                        <span class="text-danger"
+                                *ngIf="(productFormControl['brand'].touched || submitted) && productFormControl['brand'].errors?.['required']">
+                                Required
+                        </span>
+                    </div>
+                    <div class="input-field col m3">
+                        <!-- <label for="category">Select Category</label> -->
+                        <select id="category" class="form-control"  formControlName="status" [ngClass]="{ 'is-invalid': submitted && productFormControl['category'].errors }">
+                            <option *ngFor="let category of categoryList" [ngValue]="category">{{category}}</option>
+                        </select>
+                    </div>
+                    <div class="input-field col m3" *ngIf="!isUpdate">
+                        <button type="submit" class="btn btn-success btn-sm" name="add" id="add">+Add</button>
+                    </div>
+                    <div class="input-field col m3" *ngIf="isUpdate">
+                        <button type="submit" class="btn btn-success btn-sm" name="add" id="add">Yes</button>
+                        <button type="button" class="btn btn-warning btn-sm" (click)="onCancel()" name="cancel" id="cancel">No</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="msg" *ngIf="this.successMsg != null">
+            {{this.successMsg}}
+        </div>
         <div class="text-danger" *ngIf="this.errorMsg != null">
             {{this.errorMsg}}
         </div>
-        <!-- <div class="msg" *ngIf="this.successMsg != null">
-            {{this.successMsg}}
-        </div> -->
-        <div class="mat-elevation-z8" *ngIf="this.errorMsg == null">
+        <div class="text-danger" *ngIf="this.errorSearch != null">
+            {{this.errorSearch}}
+        </div>
+
+        <br>
+
+        <div class="mat-elevation-z8" *ngIf="this.errorSearch == null">
         <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)" class="mat-elevation-z8">
     
         <!-- id Column -->

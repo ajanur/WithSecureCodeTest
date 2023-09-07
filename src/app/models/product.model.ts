@@ -24,7 +24,7 @@ export interface ProductElements
   // discountPercentage:number,
   // rating: number,
   // stock: number,
-  // brand: string,
+  brand: string,
   category: string,
   // thumbnail: string,
   // images: string[]
