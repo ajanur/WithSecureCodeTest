@@ -54,22 +54,22 @@ describe('ProductListComponent', () => {
     fixture.destroy();
   })
  
-  it('should create', () => {
+  it('should create Product Component', () => {
     expect(component).toBeTruthy();
   });
   it('should create Product Form Components', () => {
     expect(component.productForm).toBeTruthy();
   });
-  it('should create Serach Component', () => {
+  it('should create Product Serach Component', () => {
     expect(component.searchControl).toBeTruthy();
   });
-  it('should create Mat Datasource Component', () => {
+  it('should create Product Datasource Component', () => {
     expect(component.dataSource).toBeTruthy();
   });
-  it('should create Paginator Component', () => {
+  it('should create Product Paginator Component', () => {
     expect(component.paginator).toBeTruthy();
   });
-  it('should create Sort Component', () => {
+  it('should create Product Sort Component', () => {
     expect(component.sort).toBeTruthy();
   });
   it('should retrive data from product service', () => {
