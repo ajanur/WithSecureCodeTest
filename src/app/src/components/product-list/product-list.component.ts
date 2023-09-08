@@ -27,9 +27,6 @@ export class ProductListComponent implements AfterViewInit  {
   displayedColumns: string[] = ['id', 'title', 'description', 'price', 'brand', 'category','actions'];
   dataSource = new MatTableDataSource<Product>();
 
-  //brandList = ['Apple','samsung','Nokia','Others']
-  //categoryList = ['Smart Phones','TV','Tablet','Others']
-
   isUpdate:boolean = false;
   submitted:boolean = false;
   errorMsg:any = null;
@@ -95,15 +92,12 @@ export class ProductListComponent implements AfterViewInit  {
     .subscribe({
       next: (data) => 
       {
-        console.log(data);
         this.productList = data.products;
         this.dataSource.data = this.productList;
       },
       error: (error) => 
       {
-        console.log(error);
         throw error;
-        //this.error = error;
       },
       complete: () => console.info('complete') 
     });
@@ -131,7 +125,6 @@ export class ProductListComponent implements AfterViewInit  {
     .subscribe({
       next: (data) => 
       {
-        console.log(data);
         if(data.products.length == 0){
           this.errorSearch = "No data found";
         }
@@ -142,26 +135,20 @@ export class ProductListComponent implements AfterViewInit  {
           this.errorSearch = null;
         }
       },
-      error: (error) => 
+      error: (err) => 
       {
-        console.log(error);
-        this.errorMsg = "Something went wrong"
-        //throw error;
-        //this.error = error;
+        this.errorMsg = err.error?err.error.message:err;
       },
       complete: () => console.info('complete') 
     });
   }
 
   onEdit(id:number){
-    console.log("Edit clicked" + JSON.stringify(id));
     this.resetvalues();
     this.isUpdate = true;
-    console.log("update enabled");
     let product = this.productList.filter(x=>x.id === id)[0];
     console.log(product);
 
-    //
     this.productUpdateSub = this.productForm.patchValue({
       id: product.id,
       title : product.title,
@@ -178,11 +165,9 @@ export class ProductListComponent implements AfterViewInit  {
     this.submitted = true;
     if (this.productForm.invalid) {
       return;
-    }
-    
+    }   
     //Server side validation and call Add Todo
     if(this.isUpdate){
-      console.log("Update : " + this.isUpdate);
       this.onSave(this.productForm.value.id);
     }
     else{
@@ -203,8 +188,7 @@ export class ProductListComponent implements AfterViewInit  {
       },
       error: (err) => 
       {
-        console.log("Submit : " + JSON.stringify(err));
-        this.errorMsg = err.error;
+        this.errorMsg = err.error?err.error.message:err;
       },
       complete: () => {console.info('complete')}
     });
@@ -243,7 +227,6 @@ export class ProductListComponent implements AfterViewInit  {
       },
       error: (err) => 
       {
-        console.log(err);
         this.errorMsg = err.error?err.error.message:err;
       },
       complete: () => console.info('complete') 
@@ -255,26 +238,21 @@ export class ProductListComponent implements AfterViewInit  {
     this.isUpdate = false;
     this.productForm.markAsUntouched();
     this.productForm.reset();
-
   }
 
   onDelete(id: number){
-    console.log("Deleting new values");
     this.resetvalues();
-
     let product = this.productList.filter(x=>x.id === id)[0];
     if(product != null || product!=undefined){
       this.productDeleteSub = this.productService.DeleteProduct(id)
       .subscribe({
         next: (res) => 
         {
-          console.log(res);
           this.successMsg = `Product  ${product.title} has been deleted successfully`;
           this.GetProductList();
         },
         error: (err) => 
         {
-          console.log(err.error);
           this.errorMsg = err.error?err.error.message:err;
         },
         complete: () => console.info('delete complete') 
@@ -282,7 +260,5 @@ export class ProductListComponent implements AfterViewInit  {
     }
     this.isUpdate = false;
   }
-  
-
 }
 
