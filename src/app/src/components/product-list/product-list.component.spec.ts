@@ -6,7 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/src/services/product.service';
 
 describe('ProductListComponent', () => {
   let component: ProductListComponent;

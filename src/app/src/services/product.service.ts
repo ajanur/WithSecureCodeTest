@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { Observable, catchError, forkJoin, throwError } from 'rxjs';
-import { Product } from 'src/app/models/product.model';
+import { Product } from 'src/app/src/models/product.model';
 
 @Injectable({
   providedIn: 'root'

@@ -2,9 +2,9 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from 'src/app/src/services/product.service';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Product } from 'src/app/models/product.model';
+import { Product } from 'src/app/src/models/product.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({

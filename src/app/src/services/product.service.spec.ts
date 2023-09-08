@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HttpClient } from '@angular/common/http';
 import { ProductService } from './product.service';
 import { of } from 'rxjs';
-import { Product } from 'src/app/models/product.model';
+import { Product } from 'src/app/src/models/product.model';
 
 describe('ProductService', () => {
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
