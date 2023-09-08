@@ -4,7 +4,7 @@ Its a sample Product Listing application using Angular. Backend API is provided 
 # Features
   1. Listing all products in tabular format.
   2. Adding new Product, Edit product and delete products.
-  3. Sorting all columns value with accending and decending order for each columns in Table.
+  3. Sorting all columns value with accending and decending order for each columns in Table by clicking column's header.
   4. Pagination with 5, 10, 15 items in one page.
   5. Search all products with text in descriptions.
   6. Show error message if no product found.
@@ -36,4 +36,10 @@ Proxy setup of public API(https://dummyjson.com/products") in proxy.config.json
   2. $ ng test
   3. Open this link http://localhost:9876/
 
-
+# Notes
+The public API (https://dummyjson.com/products) is not capable to provide production like features and performance.
+There are few drawbacks faces in public API
+  1. API is little slow in nature
+  2. Create, Update and Delete operations is giving fake results not exact results so you might not find the value you entered.However operations are ready to plug with real API.
+  3. Listing and Searching is taking time
+  4. There would not be business related server side validation.
