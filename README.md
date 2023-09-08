@@ -10,10 +10,11 @@ Its a sample Product Listing application using Angular. Backend API is provided 
   6. Show error message if no product found.
   7. Show success message for every actions except search as search will provide listing if successfull.
 
-# Prerequisite
+# Prerequisites
 1. Angular 16 installation with latest npm
 2. Public API(https://dummyjson.com/products) should be available in your machine.
 3. IDE like Visual Studio Code
+4. Postman for API testing(optional)
 
 # Setup
 Proxy setup of public API(https://dummyjson.com/products") in proxy.config.json
