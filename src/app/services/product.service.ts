@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { Observable, catchError, forkJoin, throwError } from 'rxjs';
 import { Product, ProductElements } from 'src/app/models/product.model';
-import { Todo } from 'src/app/models/todo.model';
 
 @Injectable({
   providedIn: 'root'

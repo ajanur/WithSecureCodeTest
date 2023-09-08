@@ -7,18 +7,26 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Product, ProductElements } from 'src/app/models/product.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements AfterViewInit {
+export class ProductListComponent implements AfterViewInit  {
+
+  //subscription list
+  productListsub:any;
+  productSearchSub:any;
+  productAddSub:any;
+  productUpdateSub:any;
+  productDeleteSub:any;
+
 
   productList:ProductElements[] = [];
   productSearchtList:ProductElements[] = [];
   displayedColumns: string[] = ['id', 'title', 'description', 'price', 'brand', 'category','actions'];
   dataSource = new MatTableDataSource<ProductElements>();
+
   //brandList = ['Apple','samsung','Nokia','Others']
   //categoryList = ['Smart Phones','TV','Tablet','Others']
 
@@ -50,12 +58,12 @@ export class ProductListComponent implements AfterViewInit {
   }
 
   get brandList() {
-    const unique = [...new Set(this.productList.map(item => item.brand))]; 
+    const unique = this.productList!=null?[...new Set(this.productList.map(item => item.brand))]:[]; 
     return unique;
   }
 
   get categoryList() {
-    const unique = [...new Set(this.productList.map(item => item.category))]; 
+    const unique = this.productList!=null?[...new Set(this.productList.map(item => item.category))]:[]; 
     return unique;
   }
 
@@ -71,11 +79,19 @@ export class ProductListComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.sort.disableClear = true;
   }
+  ngOnDestroy(){
+    //unsubscribe all subsciptions
+    if(this.productListsub) this.productListsub.unsubscribe();
+    if(this.productAddSub) this.productAddSub.unsubscribe();
+    if(this.productUpdateSub) this.productUpdateSub.unsubscribe();
+    if(this.productSearchSub) this.productSearchSub.unsubscribe();
+    if(this.productDeleteSub) this.productDeleteSub.unsubscribe();
+  }
 
   //public functions
 
   GetProductList(){
-    this.productService.GetProductList()
+    this.productListsub = this.productService.GetProductList()
     .subscribe({
       next: (data) => 
       {
@@ -111,7 +127,7 @@ export class ProductListComponent implements AfterViewInit {
     this.resetvalues();
     let value:any
     value = this.searchControl.value;
-    this.productService.GetSearchProduct(value)
+    this.productSearchSub = this.productService.GetSearchProduct(value)
     .subscribe({
       next: (data) => 
       {
@@ -146,7 +162,7 @@ export class ProductListComponent implements AfterViewInit {
     console.log(product);
 
     //
-    this.productForm.patchValue({
+    this.productUpdateSub = this.productForm.patchValue({
       id: product.id,
       title : product.title,
       description: product.description,
@@ -177,7 +193,7 @@ export class ProductListComponent implements AfterViewInit {
           brand: this.productForm.value.brand,
           category: this.productForm.value.category,
       }
-      this.productService.AddProduct(product)
+    this.productAddSub = this.productService.AddProduct(product)
     .subscribe({
       next: (res) => 
       {
@@ -216,13 +232,13 @@ export class ProductListComponent implements AfterViewInit {
       category : value.category
     }
 
-    this.productService.UpdateProduct(id,product)
+    this.productUpdateSub = this.productService.UpdateProduct(id,product)
     .subscribe({
       next: (res) => 
       {
         console.log(res);
         this.GetProductList();
-        this.successMsg = `Task  ${product.title} has been updated successfully`;
+        this.successMsg = `Product  ${product.title} has been updated successfully`;
         this.isUpdate = false;
       },
       error: (err) => 
@@ -248,7 +264,7 @@ export class ProductListComponent implements AfterViewInit {
 
     let product = this.productList.filter(x=>x.id === id)[0];
     if(product != null || product!=undefined){
-      this.productService.DeleteProduct(id)
+      this.productDeleteSub = this.productService.DeleteProduct(id)
       .subscribe({
         next: (res) => 
         {

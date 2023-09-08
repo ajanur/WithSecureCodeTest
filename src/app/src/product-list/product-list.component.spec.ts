@@ -57,6 +57,21 @@ describe('ProductListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should create Product Form Components', () => {
+    expect(component.productForm).toBeTruthy();
+  });
+  it('should create Serach Component', () => {
+    expect(component.searchControl).toBeTruthy();
+  });
+  it('should create Mat Datasource Component', () => {
+    expect(component.dataSource).toBeTruthy();
+  });
+  it('should create Paginator Component', () => {
+    expect(component.paginator).toBeTruthy();
+  });
+  it('should create Sort Component', () => {
+    expect(component.sort).toBeTruthy();
+  });
   it('should retrive data from product service', () => {
     fixture.detectChanges();
     expect(resultSet).toBeTruthy();
