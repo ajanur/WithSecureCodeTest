@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { Observable, catchError, forkJoin, throwError } from 'rxjs';
-import { Product, ProductElements } from 'src/app/models/product.model';
+import { Product } from 'src/app/models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,18 +27,18 @@ export class ProductService {
     return this.http.get<any>(this.BaseUrl + '/search?q=' + search ).pipe(catchError(this.handleError));
   }
 
-  AddProduct(product:any):Observable<ProductElements>{
+  AddProduct(product:any):Observable<Product>{
     const headers = {'content-type': 'application/json' };
     const body = product;
       console.log(JSON.stringify(body));
-      return this.http.post<ProductElements>(this.BaseUrl + '/add',JSON.stringify(body),{headers : headers})
+      return this.http.post<Product>(this.BaseUrl + '/add',JSON.stringify(body),{headers : headers})
       .pipe(catchError(this.handleError));
   }
 
   UpdateProduct(id: number, product: any):Observable<any>{
     const headers = {'content-type': 'application/json' };
     const body = product;
-    return this.http.put<ProductElements>(this.BaseUrl + '/' + id,JSON.stringify(body), {headers : headers})
+    return this.http.put<Product>(this.BaseUrl + '/' + id,JSON.stringify(body), {headers : headers})
       .pipe(catchError(this.handleError));
   }
 

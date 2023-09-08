@@ -4,7 +4,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { ProductService } from 'src/app/services/product.service';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Product, ProductElements } from 'src/app/models/product.model';
+import { Product } from 'src/app/models/product.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -22,10 +22,10 @@ export class ProductListComponent implements AfterViewInit  {
   productDeleteSub:any;
 
 
-  productList:ProductElements[] = [];
-  productSearchtList:ProductElements[] = [];
+  productList:Product[] = [];
+  productSearchtList:Product[] = [];
   displayedColumns: string[] = ['id', 'title', 'description', 'price', 'brand', 'category','actions'];
-  dataSource = new MatTableDataSource<ProductElements>();
+  dataSource = new MatTableDataSource<Product>();
 
   //brandList = ['Apple','samsung','Nokia','Others']
   //categoryList = ['Smart Phones','TV','Tablet','Others']
@@ -74,7 +74,7 @@ export class ProductListComponent implements AfterViewInit  {
   }
 
   ngAfterViewInit() {
-    this.dataSource = new MatTableDataSource<ProductElements>(this.productList);
+    this.dataSource = new MatTableDataSource<Product>(this.productList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSource.sort.disableClear = true;
